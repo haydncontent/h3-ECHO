@@ -1,0 +1,21 @@
+test
+
+(*) compilation and code quality of Echo class
+  -- Code compiles without errors or warnings using the MSVC compiler
+  -- Code compiles without errors or warnings using the g++ compiler
+  -- Heading of all files contain assignment information
+  -- Uses good coding practices
+(/5)
+
+(*) correctness of Echo class
+  -- Constructor is implemented correctly, including initialization of resources
+  -- Set functions are implemented correctly
+  -- ()-operator implemented correctly
+(/5)
+
+(*) efficiency of Echo class
+  -- Code is reasonably efficient
+  -- Resources are initialized and managed efficiently
+(/5)
+
+(*) Interpolates for fractional delay times?
