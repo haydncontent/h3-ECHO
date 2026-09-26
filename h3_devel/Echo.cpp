@@ -9,6 +9,19 @@
 
 using namespace std;
 
+namespace
+{
+float interpolate(RingBuffer & buf, float offset)
+{
+    int k = static_cast<int>(floor(offset));
+
+    float a = buf.get(k);
+    float b = buf.get(k+1);
+
+    return a + (offset-k) * (b-a);
+}
+}
+
 // class Echo implementation //
 // private:
 //   int          max_samples;
@@ -29,8 +42,8 @@ float Echo::operator()(float x) // y_n = x_n + (a - b)x_{n-k} + (b)y_{n-k}
 { 
     int k = floor(offset);
 
-    float xnk = xvalues.get(k);
-    float ynk = yvalues.get(k);
+    float xnk = interpolate(xvalues, offset); //xvalues.get(k);
+    float ynk = interpolate(yvalues, offset); //yvalues.get(k);
 
     float y = x + ((mix-feedback)*xnk) + (feedback*ynk);
 
@@ -39,23 +52,5 @@ float Echo::operator()(float x) // y_n = x_n + (a - b)x_{n-k} + (b)y_{n-k}
 
     return y;
 }
-
-
-// float Echo::operator()(float x)
-// {
-//     return x + (mix-feedback)*interpolate(offset, xvalues) + (feedback)*interpolate(offset, yvalues);
-// }
-
-// float interpolate(float offset, RingBuffer & x)
-// {
-//     float f = floor(offset); 
-//     int fi = static_cast<int>(f);
-
-//     float m = offset-f;
-//     float diff = x.get(0) - x.get(-1);
-
-//     return f + m * diff;
-// }
-
 
 // end class Echo implementation //
