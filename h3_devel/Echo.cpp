@@ -25,16 +25,25 @@ void Echo::setDelay(float t) { offset = rate*t; } // t (seconds) assumed between
 void Echo::setMix(float a) { mix = a; }
 void Echo::setFeedback(float b) { feedback = b; }
 
-float Echo::operator()(float x) // y_n = x_n + (a + b)x_{n-k} + (b)y_{n-k}
+float Echo::operator()(float x) // y_n = x_n + (a - b)x_{n-k} + (b)y_{n-k}
 { 
     int k = floor(offset);
-    return x + ((mix+feedback)*xvalues.get(k)) + (feedback*yvalues.get(k));
+
+    float xnk = xvalues.get(k);
+    float ynk = yvalues.get(k);
+
+    float y = x + ((mix-feedback)*xnk) + (feedback*ynk);
+
+    xvalues.put(x);
+    yvalues.put(y);
+
+    return y;
 }
 
-// 
+
 // float Echo::operator()(float x)
 // {
-//     return x + (mix+feedback)*interpolate(offset, xvalues) + (feedback)*interpolate(offset, yvalues);
+//     return x + (mix-feedback)*interpolate(offset, xvalues) + (feedback)*interpolate(offset, yvalues);
 // }
 
 // float interpolate(float offset, RingBuffer & x)
@@ -47,6 +56,6 @@ float Echo::operator()(float x) // y_n = x_n + (a + b)x_{n-k} + (b)y_{n-k}
 
 //     return f + m * diff;
 // }
-// 
+
 
 // end class Echo implementation //
