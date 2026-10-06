@@ -1,0 +1,16 @@
+Haydn_James_Content
+
+(*) compilation and code quality of Echo class
+(5/5)
+
+(*) correctness of Echo class
+(5/5)
+
+(*) efficiency of Echo class
+(5/5)
+
+(*) Interpolates for fractional delay times?
+(1/1)
+
+TOTAL: 16/16
+PERCENTAGE: 100%
